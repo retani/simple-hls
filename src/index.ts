@@ -42,6 +42,15 @@ class Transcode {
           return reject('Video Failed to Transcode');
           
         })
+
+        console.log("transcode process started, pid: ", ls.pid);
+
+        // exit when parent exits
+        process.on('beforeExit', () =>  {
+          console.log("killing transcode process because parent process exits");
+          ls.kill();
+        })
+
       })
     }
 
